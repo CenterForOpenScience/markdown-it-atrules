@@ -17,7 +17,8 @@ describe('markdown-it-mfr', function () {
     linkify: true,
     typography: true,
   }).use(require('../'), {
-    mfrRegex: /^http(?:s?):\/\/(?:www\.)?mfr\.osf\.io\/render\?url=http(?:s?):\/\/osf\.io\/([a-zA-Z0-9]{5})\/\?action=download|(^[a-zA-Z0-9]{5}$)/,
+    type: 'osf',
+    pattern: /^http(?:s?):\/\/(?:www\.)?[a-zA-Z0-9 .:]{1,}\/render\?url=http(?:s?):\/\/[a-zA-Z0-9 .:]{1,}\/([a-zA-Z0-9]{5})\/\?action=download|(^[a-zA-Z0-9]{5}$)/,
     formatUrl(videoID) { return 'https://mfr.osf.io/render?url=https://osf.io/' + videoID + '/?action=download%26mode=render'; },
   });
 
@@ -33,7 +34,7 @@ describe('markdown-it-mfr', function () {
     assert.equal(renderedHtml, '<p>@<a href="https://google.com">osf</a></p>\n');
   });
 
-  it('generates iframe properly when empty', function () {
+  it('fails when empty', function () {
     renderedHtml = md.render('@[osf]()');
     id = getMfrId(renderedHtml);
     assert.equal(renderedHtml, '<p>@<a href="">osf</a></p>\n');
@@ -77,6 +78,12 @@ describe('markdown-it-mfr', function () {
 
   it('generates iframe properly with link and two extra spaces', function () {
     renderedHtml = md.render('@[osf](https://mfr.osf.io/render?url=https://osf.io/xxxxx/?action=download%26mode=render )');
+    id = getMfrId(renderedHtml);
+    assert.equal(renderedHtml, '<p><div id="' + id + '" class="mfr mfr-file"></div><script>$(document).ready(function () {new mfr.Render("' + id + '", "https://mfr.osf.io/render?url=https://osf.io/xxxxx/?action=download%26mode=render");    }); </script></p>\n');
+  });
+
+  it('generates iframe properly with local ip', function () {
+    renderedHtml = md.render('@[osf](http://localhost:7778/render?url=http://192.168.168.167:5000/xxxxx/?action=download%26mode=render)');
     id = getMfrId(renderedHtml);
     assert.equal(renderedHtml, '<p><div id="' + id + '" class="mfr mfr-file"></div><script>$(document).ready(function () {new mfr.Render("' + id + '", "https://mfr.osf.io/render?url=https://osf.io/xxxxx/?action=download%26mode=render");    }); </script></p>\n');
   });

@@ -3,12 +3,12 @@
 
 const EMBED_REGEX = /@\[([a-zA-Z].+)]\([\s]*(.*?)[\s]*[)]/im;
 
-function videoEmbed(md, options) {
-  function videoReturn(state, silent) {
+function assetEmbed(md, options) {
+  function assetReturn(state, silent) {
     var serviceEnd;
     var serviceStart;
     var token;
-    var videoID;
+    var assetID;
     var theState = state;
     const oldPos = state.pos;
 
@@ -24,13 +24,13 @@ function videoEmbed(md, options) {
     }
 
     const service = tagMatch[1];
-    videoID = tagMatch[2];
+    assetID = tagMatch[2];
     const serviceLower = service.toLowerCase();
-    if (serviceLower === 'osf') {
-      const mfrRegex = options.mfrRegex;
-      const urlMatch = videoID.match(mfrRegex);
+    if (serviceLower === options.type) {
+      const mfrRegex = options.pattern;
+      const urlMatch = assetID.match(mfrRegex);
       if (urlMatch) {
-        videoID = urlMatch[1] || urlMatch[0]; // guid or whole link
+        assetID = urlMatch[1] || urlMatch[0]; // guid or whole link
       } else {
         return false;
       }
@@ -38,9 +38,9 @@ function videoEmbed(md, options) {
       return false;
     }
 
-    // If the videoID field is empty, regex currently make it the close parenthesis.
-    if (videoID === ')') {
-      videoID = '';
+    // If the assetID field is empty, regex currently make it the close parenthesis.
+    if (assetID === ')') {
+      assetID = '';
     }
 
     serviceStart = oldPos + 2;
@@ -57,8 +57,8 @@ function videoEmbed(md, options) {
       const newState = new theState.md.inline.State(service, theState.md, theState.env, []);
       newState.md.inline.tokenize(newState);
 
-      token = theState.push('video', '');
-      token.videoID = videoID;
+      token = theState.push('asset', '');
+      token.assetID = assetID;
       token.service = service;
       token.level = theState.level;
     }
@@ -68,21 +68,20 @@ function videoEmbed(md, options) {
     return true;
   }
 
-  return videoReturn;
+  return assetReturn;
 }
 
-function tokenizeVideo(md, options) {
+function tokenizeAsset(md, options) {
   function tokenizeReturn(tokens, idx) {
-    const videoID = md.utils.escapeHtml(tokens[idx].videoID);
-
+    const assetID = md.utils.escapeHtml(tokens[idx].assetID);
     var num = Math.random() * 0x10000;
-    return '<div id="' + num + '" class="mfr mfr-file"></div><script>$(document).ready(function () {new mfr.Render("' + num + '", "' + options.formatUrl(videoID) + '");    }); </script>';
+
+    return '<div id="' + num + '" class="mfr mfr-file"></div><script>$(document).ready(function () {new mfr.Render("' + num + '", "' + options.formatUrl(assetID) + '");    }); </script>';
   }
   return tokenizeReturn;
 }
 
-
-module.exports = function videoPlugin(md, options) {
+module.exports = function assetPlugin(md, options) {
   var theOptions = options;
   var theMd = md;
   if (theOptions) {
@@ -94,6 +93,6 @@ module.exports = function videoPlugin(md, options) {
   } else {
     theOptions = options;
   }
-  theMd.renderer.rules.video = tokenizeVideo(theMd, theOptions);
-  theMd.inline.ruler.before('emphasis', 'video', videoEmbed(theMd, theOptions));
+  theMd.renderer.rules.asset = tokenizeAsset(theMd, theOptions);
+  theMd.inline.ruler.before('emphasis', 'asset', assetEmbed(theMd, theOptions));
 };
