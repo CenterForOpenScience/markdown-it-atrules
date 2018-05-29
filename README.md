@@ -8,15 +8,18 @@
 #### Enable plugin
 
 ```js
-  var md = require('markdown-it')({
+  md = require('markdown-it')({
     html: true,
     linkify: true,
     typography: true,
   }).use(require('../'), {
     type: 'osf',
     pattern: /^http(?:s?):\/\/(?:www\.)?[a-zA-Z0-9 .:]{1,}\/render\?url=http(?:s?):\/\/[a-zA-Z0-9 .:]{1,}\/([a-zA-Z0-9]{5})\/\?action=download|(^[a-zA-Z0-9]{5}$)/,
-    formatUrl(videoID) { return 'https://mfr.osf.io/render?url=https://osf.io/' + videoID + '/?action=download%26mode=render'; },
-  });
+    format(assetID) {
+      var id = '__markdown-it-mfr-' + (new Date()).getTime();
+      return '<div id="' + id + '" class="mfr mfr-file"></div>' +
+        '<script>$(document).ready(function () {new mfr.Render("' + id + '", "' + getMfrUrl(assetID) + '");    }); </script>';
+    }
 ```
 #### Inline style
 
