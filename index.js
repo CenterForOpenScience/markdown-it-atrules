@@ -74,9 +74,7 @@ function assetEmbed(md, options) {
 function tokenizeAsset(md, options) {
   function tokenizeReturn(tokens, idx) {
     const assetID = md.utils.escapeHtml(tokens[idx].assetID);
-    var num = Math.random() * 0x10000;
-
-    return '<div id="' + num + '" class="mfr mfr-file"></div><script>$(document).ready(function () {new mfr.Render("' + num + '", "' + options.formatUrl(assetID) + '");    }); </script>';
+    return options.format(assetID);
   }
   return tokenizeReturn;
 }

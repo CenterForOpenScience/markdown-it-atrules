@@ -9,6 +9,10 @@ function getMfrId(html) {
   return html.split('"')[1];
 }
 
+function getMfrUrl(assetID) {
+  return 'https://mfr.osf.io/render?url=https://osf.io/' + assetID + '/?action=download%26mode=render';
+}
+
 // Because the mfr iframe requires a random id these tests cannot be part of
 // the markdown-it-testgen fixture
 describe('markdown-it-mfr', function () {
@@ -19,7 +23,11 @@ describe('markdown-it-mfr', function () {
   }).use(require('../'), {
     type: 'osf',
     pattern: /^http(?:s?):\/\/(?:www\.)?[a-zA-Z0-9 .:]{1,}\/render\?url=http(?:s?):\/\/[a-zA-Z0-9 .:]{1,}\/([a-zA-Z0-9]{5})\/\?action=download|(^[a-zA-Z0-9]{5}$)/,
-    formatUrl(videoID) { return 'https://mfr.osf.io/render?url=https://osf.io/' + videoID + '/?action=download%26mode=render'; },
+    format(assetID) {
+      var id = '__markdown-it-mfr-' + (new Date()).getTime();
+      return '<div id="' + id + '" class="mfr mfr-file"></div>' +
+        '<script>$(document).ready(function () {new mfr.Render("' + id + '", "' + getMfrUrl(assetID) + '");    }); </script>';
+    }
   });
 
   it('fails with bad guid', function () {
