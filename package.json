@@ -1,5 +1,5 @@
 {
-  "name": "markdown-it-mfr",
+  "name": "markdown-it-atrules",
   "version": "0.0.1",
   "description": "Markdown-it plugin to embed files with the OSF's MFR",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/johnetordoff/markdown-it-mfr"
+    "url": "https://github.com/johnetordoff/markdown-it-atrules"
   },
   "author": "johnetordoff",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/johnetordoff/markdown-it-mfr/issues"
+    "url": "https://github.com/johnetordoff/markdown-it-atrules/issues"
   },
-  "homepage": "https://github.com/johnetordoff/markdown-it-mfr",
+  "homepage": "https://github.com/johnetordoff/markdown-it-atrules",
   "keywords": [
     "markdown-it",
     "markdown-it-plugin"

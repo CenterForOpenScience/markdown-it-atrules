@@ -1,11 +1,11 @@
 {
-  "name": "markdown-it-mfr",
+  "name": "markdown-it-atrules",
   "version": "0.4.0",
   "authors": [
     "Brian J. Geiger <bgeiger@pobox.com>",
     "John E. Tordoff <john@cos.io>"
   ],
-  "description": "Markdown-it plugin to embed a mfr iframe",
+  "description": "Markdown-it plugin to embed a custom div",
   "main": "index.js",
   "kewords": [
     "markdown-it",

@@ -15,7 +15,7 @@ function getMfrUrl(assetID) {
 
 // Because the mfr iframe requires a random id these tests cannot be part of
 // the markdown-it-testgen fixture
-describe('markdown-it-mfr', function () {
+describe('markdown-it-atrules', function () {
   md = require('markdown-it')({
     html: true,
     linkify: true,
@@ -24,7 +24,7 @@ describe('markdown-it-mfr', function () {
     type: 'osf',
     pattern: /^http(?:s?):\/\/(?:www\.)?[a-zA-Z0-9 .:]{1,}\/render\?url=http(?:s?):\/\/[a-zA-Z0-9 .:]{1,}\/([a-zA-Z0-9]{5})\/\?action=download|(^[a-zA-Z0-9]{5}$)/,
     format(assetID) {
-      var id = '__markdown-it-mfr-' + (new Date()).getTime();
+      var id = '__markdown-it-atrules-' + (new Date()).getTime();
       return '<div id="' + id + '" class="mfr mfr-file"></div>' +
         '<script>$(document).ready(function () {new mfr.Render("' + id + '", "' + getMfrUrl(assetID) + '");    }); </script>';
     }
