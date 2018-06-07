@@ -24,10 +24,10 @@ describe('markdown-it-atrules', function () {
     type: 'osf',
     pattern: /^http(?:s?):\/\/(?:www\.)?[a-zA-Z0-9 .:]{1,}\/render\?url=http(?:s?):\/\/[a-zA-Z0-9 .:]{1,}\/([a-zA-Z0-9]{5})\/\?action=download|(^[a-zA-Z0-9]{5}$)/,
     format(assetID) {
-      var id = '__markdown-it-atrules-' + (new Date()).getTime();
-      return '<div id="' + id + '" class="mfr mfr-file"></div>' +
+      var cssId = '__markdown-it-atrules-' + (new Date()).getTime();
+      return '<div id="' + cssId + '" class="mfr mfr-file"></div>' +
         '<script>$(document).ready(function () {new mfr.Render("' + id + '", "' + getMfrUrl(assetID) + '");    }); </script>';
-    }
+    },
   });
 
   it('fails with bad guid', function () {
