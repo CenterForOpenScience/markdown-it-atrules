@@ -26,7 +26,7 @@ describe('markdown-it-atrules', function () {
     format(assetID) {
       var cssId = '__markdown-it-atrules-' + (new Date()).getTime();
       return '<div id="' + cssId + '" class="mfr mfr-file"></div>' +
-        '<script>$(document).ready(function () {new mfr.Render("' + id + '", "' + getMfrUrl(assetID) + '");    }); </script>';
+        '<script>$(document).ready(function () {new mfr.Render("' + cssId + '", "' + getMfrUrl(assetID) + '");    }); </script>';
     },
   });
 
