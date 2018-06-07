@@ -32,19 +32,16 @@ describe('markdown-it-atrules', function () {
 
   it('fails with bad guid', function () {
     renderedHtml = md.render('@[osf](2manychars)');
-    id = getMfrId(renderedHtml);
     assert.equal(renderedHtml, '<p>@<a href="2manychars">osf</a></p>\n');
   });
 
   it('fails with bad non osf link', function () {
     renderedHtml = md.render('@[osf](https://google.com )');
-    id = getMfrId(renderedHtml);
     assert.equal(renderedHtml, '<p>@<a href="https://google.com">osf</a></p>\n');
   });
 
   it('fails when empty', function () {
     renderedHtml = md.render('@[osf]()');
-    id = getMfrId(renderedHtml);
     assert.equal(renderedHtml, '<p>@<a href="">osf</a></p>\n');
   });
 
