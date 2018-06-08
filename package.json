@@ -4,7 +4,8 @@
   "description": "Markdown-it plugin to embed files with the OSF's MFR",
   "main": "index.js",
   "scripts": {
-    "test": "eslint . && mocha"
+    "test": "eslint . && mocha",
+    "release": "np"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,12 @@
     "markdown-it",
     "markdown-it-plugin"
   ],
-  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "np": "^3.0.4"
+  },
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
