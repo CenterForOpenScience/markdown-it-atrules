@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/johnetordoff/markdown-it-atrules"
+    "url": "https://github.com/CenterForOpenScience/markdown-it-atrules"
   },
   "author": "johnetordoff",
   "license": "MIT",
