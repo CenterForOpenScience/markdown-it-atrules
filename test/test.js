@@ -92,4 +92,10 @@ describe('markdown-it-atrules', function () {
     id = getMfrId(renderedHtml);
     assert.equal(renderedHtml, '<p><div id="' + id + '" class="mfr mfr-file"></div><script>$(document).ready(function () {new mfr.Render("' + id + '", "https://mfr.osf.io/render?url=https://osf.io/xxxxx/?action=download%26mode=render");    }); </script></p>\n');
   });
+
+  it('generates embed followed by formatted markdown', function () {
+    renderedHtml = md.render('@[osf](abc12)\n*foo*');
+    id = getMfrId(renderedHtml);
+    assert.ok(renderedHtml.indexOf(id) >= 0);
+  });
 });
